@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1E1E1E"
+    android:padding="24dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:text="TẠO TÀI KHOẢN"
+            android:textSize="24sp"
+            android:textColor="#D7CCC8"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center"
+            android:layout_marginBottom="24dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <!-- Họ tên -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:hint="Họ tên"
+            app:boxBackgroundMode="filled"
+            app:boxBackgroundColor="#2E2E2E"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtFullname"
+                android:textColor="#FFFFFF"
+                android:inputType="textPersonName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Tên đăng nhập -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:hint="Tên đăng nhập"
+            app:boxBackgroundMode="filled"
+            app:boxBackgroundColor="#2E2E2E"
+            android:layout_marginTop="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtUsername"
+                android:textColor="#FFFFFF"
+                android:inputType="text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Mật khẩu -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:hint="Mật khẩu"
+            app:boxBackgroundMode="filled"
+            app:boxBackgroundColor="#2E2E2E"
+            android:layout_marginTop="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtPassword"
+                android:textColor="#FFFFFF"
+                android:inputType="textPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Chọn loại tài khoản -->
+        <TextView
+            android:text="Loại tài khoản:"
+            android:textColor="#BCAAA4"
+            android:layout_marginTop="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <Spinner
+            android:id="@+id/spnRole"
+            android:entries="@array/user_roles"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+        <!-- Nút đăng ký -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnRegister"
+            android:text="Đăng ký"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="#6D4C41"
+            android:textColor="#FFF3E0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <!-- Link quay lại -->
+        <TextView
+            android:id="@+id/tvBackLogin"
+            android:text="Đã có tài khoản? Đăng nhập"
+            android:textColor="#A1887F"
+            android:gravity="center"
+            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+</ScrollView>

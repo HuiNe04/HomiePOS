@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Homie</string>
+
+    <!-- Mảng loại tài khoản -->
+    <string-array name="user_roles">
+        <item>Admin</item>
+        <item>Staff</item>
+    </string-array>
+</resources>
