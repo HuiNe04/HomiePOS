@@ -70,19 +70,12 @@
 
         <!-- Chọn loại tài khoản -->
         <TextView
+            android:id="@+id/tvRoleLabel"
             android:text="Loại tài khoản:"
             android:textColor="#BCAAA4"
             android:layout_marginTop="16dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
-
-        <Spinner
-            android:id="@+id/spnRole"
-            android:entries="@array/user_roles"
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
 
         <!-- Nút đăng ký -->
         <com.google.android.material.button.MaterialButton
