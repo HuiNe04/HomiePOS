@@ -15,7 +15,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "HOMI.db";  // tên file DataBase
     private static final int DATABASE_VERSION = 1;
     private final Context context;
-    private String dbPath;
+    private final String dbPath;
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
