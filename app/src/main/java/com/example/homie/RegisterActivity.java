@@ -6,52 +6,54 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import java.util.List;
 
 public class RegisterActivity extends AppCompatActivity {
 
     TextInputEditText edtFullname, edtUsername, edtPassword;
-    Spinner spnRole;
     MaterialButton btnRegister;
-    TextView tvBackLogin;
-
-    DatabaseHelper dbHelper; // Lớp này Khanh sẽ làm ở phần DB
+    TextView tvBackLogin, tvRoleLabel;
+    DatabaseHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        // Ánh xạ
+        // Ánh xạ View
         edtFullname = findViewById(R.id.edtFullname);
         edtUsername = findViewById(R.id.edtUsername);
         edtPassword = findViewById(R.id.edtPassword);
-        spnRole = findViewById(R.id.spnRole);
         btnRegister = findViewById(R.id.btnRegister);
         tvBackLogin = findViewById(R.id.tvBackLogin);
+        tvRoleLabel = findViewById(R.id.tvRoleLabel);
 
         dbHelper = new DatabaseHelper(this);
 
-        // Kiểm tra xem có tài khoản nào chưa
+        // 🟢 Kiểm tra số lượng user hiện có trong database
         int userCount = dbHelper.getUserCount();
 
+        String defaultRole;
         if (userCount == 0) {
-            // Nếu chưa có user nào → tài khoản đầu tiên là Admin
-            spnRole.setVisibility(View.GONE);
-            Toast.makeText(this, "Hệ thống chưa có tài khoản, bạn sẽ được tạo làm Admin!", Toast.LENGTH_LONG).show();
+            // ⚙️ Nếu chưa có user nào → người đầu tiên là Admin
+            defaultRole = "Admin";
+            tvRoleLabel.setText("Loại tài khoản: Admin (mặc định)");
+        } else {
+            // ⚙️ Nếu đã có user → tất cả các tài khoản mới mặc định là Staff
+            defaultRole = "Staff";
+            tvRoleLabel.setText("Loại tài khoản: Staff (mặc định)");
         }
 
-        // Quay lại màn hình login
+        // 🔙 Quay lại màn hình đăng nhập
         tvBackLogin.setOnClickListener(v -> {
             Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
             startActivity(intent);
             finish();
         });
 
-        // Nút đăng ký
+        // 🔘 Xử lý nút đăng ký
+        String finalDefaultRole = defaultRole;
         btnRegister.setOnClickListener(v -> {
             String fullname = edtFullname.getText().toString().trim();
             String username = edtUsername.getText().toString().trim();
@@ -62,17 +64,10 @@ public class RegisterActivity extends AppCompatActivity {
                 return;
             }
 
-            String role;
-            if (userCount == 0) {
-                // Tài khoản đầu tiên luôn là Admin
-                role = "Admin";
-            } else {
-                // Nếu đã có user, lấy loại từ spinner
-                role = spnRole.getSelectedItem().toString();
-            }
+            // Gán role theo logic
+            String role = finalDefaultRole;
 
             boolean success = dbHelper.insertUser(username, password, fullname, role);
-
             if (success) {
                 Toast.makeText(this, "Tạo tài khoản thành công (" + role + ")", Toast.LENGTH_SHORT).show();
                 finish();
