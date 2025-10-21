@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RadioGroup
+        android:id="@+id/rgInvoiceType"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/rbNhap"
+            android:text="Nhập"
+            android:textColor="#FFF3E0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <RadioButton
+            android:id="@+id/rbXuat"
+            android:text="Xuất"
+            android:textColor="#FFF3E0"
+            android:layout_marginStart="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/edtVat"
+        android:hint="VAT (%)"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#BCAAA4"
+        android:inputType="numberDecimal"
+        android:backgroundTint="#6D4C41"
+        android:layout_marginTop="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <EditText
+        android:id="@+id/edtTotalAmount"
+        android:hint="Tổng tiền (VNĐ)"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#BCAAA4"
+        android:inputType="numberDecimal"
+        android:backgroundTint="#6D4C41"
+        android:layout_marginTop="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <EditText
+        android:id="@+id/edtProductName"
+        android:hint="Tên sản phẩm"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#BCAAA4"
+        android:inputType="textPersonName"
+        android:backgroundTint="#6D4C41"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <EditText
+        android:id="@+id/edtProductPrice"
+        android:hint="Giá sản phẩm (VNĐ)"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#BCAAA4"
+        android:inputType="numberDecimal"
+        android:backgroundTint="#6D4C41"
+        android:layout_marginTop="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>
