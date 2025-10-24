@@ -28,7 +28,6 @@
         android:layout_marginHorizontal="12dp" />
 
     <!-- Nút thêm sản phẩm -->
-    <!-- Nút thêm sản phẩm -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAddProduct"
         android:layout_width="wrap_content"
@@ -40,5 +39,4 @@
         android:src="@android:drawable/ic_input_add"
         app:tint="#FFF3E0"
         app:backgroundTint="#6D4C41" />
-
 </RelativeLayout>
