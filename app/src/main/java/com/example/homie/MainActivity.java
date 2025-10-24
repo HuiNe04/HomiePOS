@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
     SQLiteDatabase db;
     TextView tvWelcome;
     MaterialButton btnProduct, btnInvoice, btnRevenue, btnCreateUser;
-
+    String currentUserId;
     String currentUserName;
     String currentUserRole;
 
@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         // ✅ Nhận thông tin từ LoginActivity (nếu có)
         currentUserName = getIntent().getStringExtra("user_name");
         currentUserRole = getIntent().getStringExtra("user_role");
+        currentUserId = getIntent().getStringExtra("id_user");
 
         if (currentUserName == null) currentUserName = "Người dùng";
         if (currentUserRole == null) currentUserRole = "Staff";
@@ -85,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
         // ✅ Quản lý hóa đơn
         btnInvoice.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, InvoiceActivity.class);
+            intent.putExtra("id_user", currentUserId); // 🟢 Gửi ID_USER của người đăng nhập
             startActivity(intent);
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         });

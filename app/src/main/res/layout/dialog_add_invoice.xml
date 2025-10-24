@@ -2,9 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:padding="16dp"
+    android:background="#1E1E1E"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <!-- Tên hóa đơn -->
+    <EditText
+        android:id="@+id/edtInvoiceName"
+        android:hint="Tên hóa đơn (VD: Nhập hàng tháng 10)"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#BCAAA4"
+        android:inputType="textCapWords"
+        android:backgroundTint="#6D4C41"
+        android:layout_marginBottom="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!-- Chọn loại hóa đơn -->
     <RadioGroup
         android:id="@+id/rgInvoiceType"
         android:orientation="horizontal"
@@ -27,6 +41,7 @@
             android:layout_height="wrap_content"/>
     </RadioGroup>
 
+    <!-- VAT -->
     <EditText
         android:id="@+id/edtVat"
         android:hint="VAT (%)"
@@ -38,6 +53,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
+    <!-- Tổng tiền -->
     <EditText
         android:id="@+id/edtTotalAmount"
         android:hint="Tổng tiền (VNĐ)"

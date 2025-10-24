@@ -66,11 +66,14 @@ public class LoginActivity extends AppCompatActivity {
             try {
                 Cursor cursor = dbHelper.checkLogin(username, password);
                 if (cursor != null && cursor.moveToFirst()) {
+                    // 🆕 Lấy thêm ID_USER
+                    String idUser = cursor.getString(cursor.getColumnIndexOrThrow("ID_USER"));
                     String fullname = cursor.getString(cursor.getColumnIndexOrThrow("FULLNAME"));
                     String role = cursor.getString(cursor.getColumnIndexOrThrow("ROLE"));
                     cursor.close();
 
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    intent.putExtra("id_user", idUser); // 🆕 gửi sang Main
                     intent.putExtra("user_name", fullname);
                     intent.putExtra("user_role", role);
                     startActivity(intent);
@@ -84,5 +87,6 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(this, "Lỗi: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
     }
 }

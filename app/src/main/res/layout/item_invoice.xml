@@ -7,10 +7,34 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <!-- Tên hóa đơn -->
     <TextView
-        android:id="@+id/tvInvoice"
-        android:textColor="#FFF3E0"
-        android:textSize="16sp"
+        android:id="@+id/tvInvoiceName"
+        android:text="Tên hóa đơn"
+        android:textColor="#FFCC80"
+        android:textSize="18sp"
+        android:textStyle="bold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+    <!-- Loại và ngày -->
+    <TextView
+        android:id="@+id/tvInvoiceInfo"
+        android:text="Loại: Nhập | Ngày: 2025-10-23"
+        android:textColor="#FFE0B2"
+        android:textSize="14sp"
+        android:layout_marginTop="4dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!-- Tổng và VAT -->
+    <TextView
+        android:id="@+id/tvInvoiceTotal"
+        android:text="Tổng: 1.000.000₫ | VAT: 10%"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        android:layout_marginTop="2dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 </LinearLayout>

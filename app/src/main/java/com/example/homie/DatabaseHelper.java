@@ -159,4 +159,55 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Log.e("DB_ERROR", "Không thể liệt kê bảng: " + e.getMessage());
         }
     }
+    // 🟢 Lấy danh sách hóa đơn (đọc từ bảng INVOICE)
+    public Cursor getAllInvoices() {
+        SQLiteDatabase db = openDatabase();
+        return db.rawQuery("SELECT * FROM INVOICE ORDER BY DATE DESC", null);
+    }
+
+    // 🟢 Thêm hóa đơn mới (đúng với schema hiện tại)
+    public boolean insertInvoice(String idInvoice, String idUser, String date,
+                                 String type, double subtotal, double vatPercent,
+                                 double vat, double total) {
+        try {
+            SQLiteDatabase db = openDatabase();
+            db.execSQL("INSERT INTO INVOICE (ID_INVOICE, ID_USER, DATE, TYPE, SUBTOTAL, VAT_PERCENT, VAT, TOTAL) " +
+                            "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                    new Object[]{idInvoice, idUser, date, type, subtotal, vatPercent, vat, total});
+            Log.d("DB_INSERT", "✅ Thêm hóa đơn " + idInvoice + " thành công!");
+            return true;
+        } catch (Exception e) {
+            Log.e("DB_ERROR", "❌ Lỗi khi thêm hóa đơn: " + e.getMessage());
+            return false;
+        }
+    }
+    // 🟢 Cập nhật hóa đơn
+    public boolean updateInvoice(String idInvoice, String invoiceName, double vatPercent, double total) {
+        try {
+            double subtotal = total / (1 + vatPercent / 100.0);
+            double vat = total - subtotal;
+            SQLiteDatabase db = openDatabase();
+            db.execSQL("UPDATE INVOICE SET INVOICE_NAME=?, VAT_PERCENT=?, VAT=?, TOTAL=?, SUBTOTAL=? WHERE ID_INVOICE=?",
+                    new Object[]{invoiceName, vatPercent, vat, total, subtotal, idInvoice});
+            Log.d("DB_UPDATE", "✅ Cập nhật hóa đơn " + idInvoice + " thành công!");
+            return true;
+        } catch (Exception e) {
+            Log.e("DB_UPDATE", "❌ Lỗi khi cập nhật: " + e.getMessage());
+            return false;
+        }
+    }
+
+    // 🟢 Xóa hóa đơn
+    public boolean deleteInvoice(String idInvoice) {
+        try {
+            SQLiteDatabase db = openDatabase();
+            db.execSQL("DELETE FROM INVOICE WHERE ID_INVOICE=?", new Object[]{idInvoice});
+            Log.d("DB_DELETE", "🗑️ Đã xóa hóa đơn " + idInvoice);
+            return true;
+        } catch (Exception e) {
+            Log.e("DB_DELETE", "❌ Lỗi khi xóa: " + e.getMessage());
+            return false;
+        }
+    }
+
 }

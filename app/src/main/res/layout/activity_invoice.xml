@@ -8,7 +8,7 @@
     <!-- Tiêu đề -->
     <TextView
         android:id="@+id/tvInvoiceTitle"
-        android:text="Quản lý hóa đơn"
+        android:text="📄 Quản lý hóa đơn"
         android:textColor="#FFF3E0"
         android:textSize="22sp"
         android:fontFamily="sans-serif-medium"
