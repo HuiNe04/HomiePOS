@@ -10,6 +10,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+import java.util.ArrayList;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "HOMI.db";  // tên file DataBase
@@ -68,4 +72,49 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public SQLiteDatabase openDatabase() throws SQLException {
         return SQLiteDatabase.openDatabase(dbPath, null, SQLiteDatabase.OPEN_READWRITE);
     }
+    // 🟢 Hàm thêm sản phẩm mới
+    public boolean insertProduct(String idProduct, String name, double price, int stock) {
+        SQLiteDatabase db = null;
+        try {
+            db = getWritableDatabase();
+            db.execSQL("INSERT INTO PRODUCT (ID_PRODUCT, NAME, PRICE, STOCK) VALUES (?, ?, ?, ?)",
+                    new Object[]{idProduct, name, price, stock});
+            Log.d("DB_PRODUCT", "✅ Thêm sản phẩm thành công: " + name);
+            return true;
+        } catch (Exception e) {
+            Log.e("DB_PRODUCT", "❌ Lỗi thêm sản phẩm: " + e.getMessage(), e);
+            return false;
+        } finally {
+            if (db != null) db.close();
+        }
+    }
+
+
+    // 🟢 Hàm lấy danh sách sản phẩm từ DB
+    public ArrayList<String> getAllProducts() {
+        ArrayList<String> products = new ArrayList<>();
+        SQLiteDatabase db = null;
+        Cursor cursor = null;
+
+        try {
+            db = getReadableDatabase();
+            cursor = db.rawQuery("SELECT NAME, PRICE FROM PRODUCT", null);
+
+            while (cursor.moveToNext()) {
+                String name = cursor.getString(0);
+                double price = cursor.getDouble(1);
+                products.add(name + " - " + price + "₫");
+            }
+
+        } catch (Exception e) {
+            Log.e("DB_PRODUCT", "❌ Lỗi đọc sản phẩm: " + e.getMessage(), e);
+        } finally {
+            if (cursor != null) cursor.close();
+            if (db != null) db.close();
+        }
+
+        return products;
+    }
 }
+
+
