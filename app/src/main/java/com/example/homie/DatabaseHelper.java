@@ -13,11 +13,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.List;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
-import java.util.ArrayList;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -48,7 +43,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (!dbExist) {
             Log.d("DB_STATUS", "Database does NOT exist. Creating...");
 
-            // 🟡 Đảm bảo thư mục đích tồn tại
             File dbFile = new File(dbPath);
             File parentDir = dbFile.getParentFile();
             if (parentDir != null && !parentDir.exists()) {
@@ -56,13 +50,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Log.d("DB_STATUS", "Created database folder: " + created);
             }
 
-            // 🟡 Tạo file rỗng trước khi copy
             this.getReadableDatabase();
             close();
 
-            // 🟢 Copy file từ assets
             copyDatabase();
-
             Log.d("DB_STATUS", "✅ Database copied successfully!");
         } else {
             Log.d("DB_STATUS", "📁 Database already exists, skip copying.");
@@ -108,6 +99,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Log.d("DB_STATUS", "Opening database at path: " + dbPath);
         return SQLiteDatabase.openDatabase(dbPath, null, SQLiteDatabase.OPEN_READWRITE);
     }
+
     // 🟢 Hàm thêm sản phẩm mới
     public boolean insertProduct(String idProduct, String name, double price, int stock) {
         SQLiteDatabase db = null;
@@ -124,7 +116,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             if (db != null) db.close();
         }
     }
-
 
     // 🟢 Hàm lấy danh sách sản phẩm từ DB
     public ArrayList<String> getAllProducts() {
@@ -151,9 +142,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return products;
     }
-}
-
-
 
     // 🟢 Đếm số lượng user (phục vụ xác định Admin đầu tiên)
     public int getUserCount() {
@@ -169,20 +157,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Log.e("DB_ERROR", "Lỗi khi đếm user: " + e.getMessage());
         } finally {
             if (cursor != null) cursor.close();
+            if (db != null) db.close();
         }
         return count;
     }
 
     // 🟢 Thêm user mới
     public boolean insertUser(String idUser, String username, String password, String fullname, String role) {
+        SQLiteDatabase db = null;
         try {
-            SQLiteDatabase db = openDatabase();
+            db = openDatabase();
             db.execSQL("INSERT INTO USER (ID_USER, USER_NAME, PASSWORD, FULLNAME, ROLE) VALUES (?, ?, ?, ?, ?)",
                     new Object[]{idUser, username, password, fullname, role});
+            Log.d("DB_USER", "✅ Thêm user thành công: " + username);
             return true;
         } catch (Exception e) {
-            Log.e("DB_ERROR", "Lỗi khi thêm user: " + e.getMessage());
+            Log.e("DB_USER", "❌ Lỗi khi thêm user: " + e.getMessage());
             return false;
+        } finally {
+            if (db != null) db.close();
         }
     }
 
@@ -191,7 +184,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = openDatabase();
         Cursor cursor = null;
         try {
-            cursor = db.rawQuery("SELECT * FROM USER WHERE USER_NAME=? AND PASSWORD=?", new String[]{username, password});
+            cursor = db.rawQuery("SELECT * FROM USER WHERE USER_NAME=? AND PASSWORD=?",
+                    new String[]{username, password});
         } catch (Exception e) {
             Log.e("DB_ERROR", "Lỗi khi đăng nhập: " + e.getMessage());
         }
@@ -211,13 +205,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Log.e("DB_ERROR", "Không thể liệt kê bảng: " + e.getMessage());
         }
     }
+
     // 🟢 Lấy danh sách hóa đơn (đọc từ bảng INVOICE)
     public Cursor getAllInvoices() {
         SQLiteDatabase db = openDatabase();
         return db.rawQuery("SELECT * FROM INVOICE ORDER BY DATE DESC", null);
     }
 
-    // 🟢 Thêm hóa đơn mới (đúng với schema hiện tại)
+    // 🟢 Thêm hóa đơn mới
     public boolean insertInvoice(String idInvoice, String idUser, String date,
                                  String type, double subtotal, double vatPercent,
                                  double vat, double total) {
@@ -233,6 +228,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return false;
         }
     }
+
     // 🟢 Cập nhật hóa đơn
     public boolean updateInvoice(String idInvoice, String invoiceName, double vatPercent, double total) {
         try {
@@ -261,5 +257,4 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return false;
         }
     }
-
 }
