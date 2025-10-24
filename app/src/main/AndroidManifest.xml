@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Material3.Dark.NoActionBar">
         <activity
+            android:name=".InvoiceDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".RevenueActivity"
             android:exported="false" />
         <activity
@@ -30,8 +33,9 @@
             android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>
